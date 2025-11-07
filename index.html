@@ -118,6 +118,50 @@
             transform: translateY(-3px);
         }
 
+        /* Mobile Header (hidden by default) */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to right, #800000, #a52a2a);
+            color: white;
+            padding: 15px 20px;
+            z-index: 999;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .mobile-header .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .mobile-header .header-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* Mobile Login Card */
+        .mobile-login-card {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px 25px;
+            width: 90%;
+            max-width: 400px;
+            z-index: 100;
+        }
+
         /* Hero Section */
         .hero {
             height: calc(100vh - 100px);
@@ -182,6 +226,31 @@
             font-weight: 700;
             letter-spacing: 6px;
             line-height: 1.1;
+        }
+
+        /* Mobile Background */
+        .mobile-background {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('photo/pic3.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        .mobile-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2;
         }
 
         /* Modal Styles - Exact Match */
@@ -357,58 +426,48 @@
         }
 
         @media (max-width: 768px) {
+            /* Hide desktop header on mobile */
             .header {
-                flex-direction: column;
-                padding: 15px 20px;
-                gap: 15px;
-                min-height: auto;
+                display: none;
             }
 
-            .logo {
-                width: 60px;
-                height: 60px;
+            /* Show mobile header */
+            .mobile-header {
+                display: block;
+                position: relative;
             }
 
-            .university-name h1 {
-                font-size: 16px;
+            /* Hide hero section on mobile */
+            .hero {
+                display: none;
             }
 
-            .nav-menu {
-                flex-wrap: wrap;
-                gap: 15px;
-                justify-content: center;
+            /* Show mobile background and login card */
+            .mobile-background {
+                display: block;
             }
 
-            .nav-menu a {
-                font-size: 16px;
+            .mobile-login-card {
+                display: block;
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                margin: 80px auto 40px;
             }
 
-            .login-btn {
-                padding: 8px 25px;
-            }
-
-            .hero-content {
-                flex-direction: column;
-                text-align: center;
-                padding: 20px;
-            }
-
-            .hero-title h1 {
-                font-size: 48px;
-            }
-
-            .hero-title h2,
-            .hero-title h3 {
-                font-size: 44px;
-            }
-
-            .seal {
-                width: 200px;
-                height: 200px;
+            /* Adjust body for mobile layout */
+            body {
+                background: transparent;
             }
         }
 
         @media (max-width: 480px) {
+            .mobile-login-card {
+                padding: 25px 20px;
+                margin: 60px auto 30px;
+            }
+            
             .hero-title h1 {
                 font-size: 36px;
                 letter-spacing: 3px;
@@ -424,40 +483,56 @@
                 width: 160px;
                 height: 160px;
             }
-
-            /* --- Updated Responsive Modal Styles --- */
-            .modal-header {
-                padding: 2rem 1.5rem 0.5rem;
-            }
-            .modal-body {
-                padding: 0 1.5rem 2rem;
-            }
-            .modal-title {
-                font-size: 1.1rem;
-                margin-bottom: 1.5rem;
-            }
-            .login-form-control {
-                /* Adjust padding for smaller icon offset */
-                padding: 0.75rem 1rem 0.75rem 2.5rem; 
-            }
-            .input-icon {
-                left: 0.75rem; /* Move icon slightly left */
-            }
-            .password-toggle {
-                right: 0.75rem; /* Move toggle slightly left */
-            }
-            .remember-forgot {
-                /* Stack 'remember' and 'forgot' vertically */
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.75rem;
-            }
-            /* --- End of Updated Modal Styles --- */
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- Mobile Background -->
+    <div class="mobile-background"></div>
+
+    <!-- Mobile Header (visible only on mobile) -->
+    <div class="mobile-header">
+        <div class="header-content">
+            <h1 class="header-title">Enverga University Candelaria</h1>
+        </div>
+    </div>
+
+    <!-- Mobile Login Card -->
+    <div class="mobile-login-card">
+        <div class="text-center mb-4">
+            <img src="photo/mseuflogo.png" alt="MSEUF Logo" class="login-logo">
+            <h5 class="modal-title">Welcome to MSEUFCI Portal</h5>
+        </div>
+        
+        <form id="mobileLoginForm">
+            <div class="input-wrapper">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" class="login-form-control" id="mobileUserId" placeholder="User ID" required>
+            </div>
+            
+            <div class="input-wrapper">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" class="login-form-control" id="mobilePassword" placeholder="Password" required>
+                <button type="button" class="password-toggle" onclick="toggleMobilePassword()">
+                    <i class="fas fa-eye-slash" id="mobileToggleIcon"></i>
+                </button>
+            </div>
+            
+            <div class="remember-forgot">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="mobileRememberMe">
+                    <label class="form-check-label" for="mobileRememberMe">
+                        Remember me
+                    </label>
+                </div>
+                <a href="#" class="forgot-password">Forgot Password?</a>
+            </div>
+            
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+    </div>
+
+    <!-- Desktop Header -->
     <div class="header">
         <div class="logo-section">
             <div class="logo">
@@ -492,7 +567,7 @@
         </div>
     </div>
 
-    <!-- Login Modal -->
+    <!-- Login Modal (for desktop) -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -513,8 +588,7 @@
                             <i class="fas fa-lock input-icon"></i>
                             <input type="password" class="login-form-control" id="password" placeholder="Password" required>
                             <button type="button" class="password-toggle" onclick="togglePassword()">
-                                <i class="fas fa-eye-slash" id="toggleIcon">
-                                </i>
+                                <i class="fas fa-eye-slash" id="toggleIcon"></i>
                             </button>
                         </div>
                         
@@ -552,7 +626,22 @@
             }
         }
 
-        // Simple alert simulation for login
+        function toggleMobilePassword() {
+            const passwordInput = document.getElementById('mobilePassword');
+            const toggleIcon = document.getElementById('mobileToggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            }
+        }
+
+        // Desktop form submission
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -562,21 +651,34 @@
             
             console.log('Login attempt:', {
                 userId: userId,
-                password: password, // In a real app, never log passwords
+                password: password,
                 rememberMe: rememberMe
             });
             
-            // In a real app, you'd show a custom modal/toast, not an alert
-            // For demo purposes, we'll just log and close the modal
+            alert('Login functionality would be processed here.\nUser ID: ' + userId);
             
-            // This is just a placeholder. Replace with actual login logic.
-            console.log('Login functionality would be processed here.\nUser ID: ' + userId);
-            
-            // Get the Bootstrap modal instance and hide it
             const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
             modal.hide();
             
-            // Reset form after submission
+            this.reset();
+        });
+
+        // Mobile form submission
+        document.getElementById('mobileLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userId = document.getElementById('mobileUserId').value;
+            const password = document.getElementById('mobilePassword').value;
+            const rememberMe = document.getElementById('mobileRememberMe').checked;
+            
+            console.log('Mobile login attempt:', {
+                userId: userId,
+                password: password,
+                rememberMe: rememberMe
+            });
+            
+            alert('Login functionality would be processed here.\nUser ID: ' + userId);
+            
             this.reset();
         });
     </script>
