@@ -13,9 +13,11 @@
             box-sizing: border-box;
         }
 
-        body {
+        html, body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
         }
 
         /* Header Styles */
@@ -28,8 +30,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             min-height: 100px;
+            z-index: 1000;
         }
 
         .header::before {
@@ -118,7 +124,7 @@
             transform: translateY(-3px);
         }
 
-        /* Mobile Header (hidden by default) */
+        /* Mobile Header - Updated Size */
         .mobile-header {
             display: none;
             position: fixed;
@@ -131,48 +137,56 @@
             z-index: 999;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-
         .mobile-header .header-content {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 15px;
         }
-
         .mobile-header .header-title {
             font-size: 1.1rem;
             font-weight: 600;
             margin: 0;
+            flex-grow: 1;
             text-align: center;
         }
 
-        /* Mobile Login Card */
-        .mobile-login-card {
+        /* Mobile Login Form */
+        .mobile-login-form {
             display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             background: white;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            padding: 30px 25px;
-            width: 90%;
-            max-width: 400px;
-            z-index: 100;
+            padding: 2rem;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
         }
 
-        /* Hero Section */
+        .mobile-login-form .login-logo {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1.5rem;
+            display: block;
+        }
+
+        .mobile-login-form .form-title {
+            color: #000;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        /* Hero Section - Fixed background */
         .hero {
-            height: calc(100vh - 100px);
+            height: 100vh;
             background-image: url('photo/pic3.png');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            margin-top: 100px;
         }
 
         .hero-content {
@@ -226,31 +240,6 @@
             font-weight: 700;
             letter-spacing: 6px;
             line-height: 1.1;
-        }
-
-        /* Mobile Background */
-        .mobile-background {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('photo/pic3.png');
-            background-size: cover;
-            background-position: center;
-            z-index: 1;
-        }
-
-        .mobile-background::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2;
         }
 
         /* Modal Styles - Exact Match */
@@ -350,49 +339,6 @@
             font-size: 1.1rem;
         }
 
-        .remember-forgot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-        }
-
-        .form-check {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .form-check-input {
-            width: 18px;
-            height: 18px;
-            border: 2px solid #d1d5db;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        .form-check-input:checked {
-            background-color: #8B0000;
-            border-color: #8B0000;
-        }
-
-        .form-check-label {
-            color: #000;
-            margin: 0;
-            cursor: pointer;
-        }
-
-        .forgot-password {
-            color: #8B0000;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-
         .btn-login {
             background: linear-gradient(135deg, #7d0000 0%, #1a1a1a 100%);
             color: white;
@@ -404,6 +350,7 @@
             width: 100%;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin-top: 1rem;
         }
 
         .btn-login:hover {
@@ -426,48 +373,85 @@
         }
 
         @media (max-width: 768px) {
-            /* Hide desktop header on mobile */
+            .mobile-header {
+                display: block;
+            }
+
             .header {
                 display: none;
             }
 
-            /* Show mobile header */
-            .mobile-header {
-                display: block;
+            .hero {
+                height: 100vh;
+                padding-top: 60px;
+                padding-bottom: 40px;
                 position: relative;
+                margin-top: 0;
+                background-attachment: fixed;
             }
 
-            /* Hide hero section on mobile */
-            .hero {
+            .hero-content {
+                flex-direction: column;
+                gap: 30px;
+                padding: 20px;
+                position: relative;
+                width: 100%;
+            }
+
+            /* Hide login button on mobile */
+            .login-btn {
                 display: none;
             }
 
-            /* Show mobile background and login card */
-            .mobile-background {
-                display: block;
+            /* Show login form on mobile - centered and overlaying */
+            .mobile-login-form {
+                display: block !important;
+                width: 90%;
+                max-width: 400px;
+                margin: 0 auto;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 10;
             }
 
-            .mobile-login-card {
-                display: block;
+            /* Hide modal backdrop and modal on mobile */
+            .modal-backdrop {
+                display: none !important;
+            }
+            
+            #loginModal {
+                display: none !important;
+            }
+
+            .hero-title {
                 position: relative;
-                top: auto;
-                left: auto;
-                transform: none;
-                margin: 80px auto 40px;
+                z-index: 1;
+                margin-top: 20px;
             }
 
-            /* Adjust body for mobile layout */
-            body {
-                background: transparent;
+            .seal {
+                position: relative;
+                z-index: 1;
+            }
+
+            .hero-title h1 {
+                font-size: 48px;
+            }
+
+            .hero-title h2,
+            .hero-title h3 {
+                font-size: 44px;
+            }
+
+            .seal {
+                width: 200px;
+                height: 200px;
             }
         }
 
         @media (max-width: 480px) {
-            .mobile-login-card {
-                padding: 25px 20px;
-                margin: 60px auto 30px;
-            }
-            
             .hero-title h1 {
                 font-size: 36px;
                 letter-spacing: 3px;
@@ -483,13 +467,14 @@
                 width: 160px;
                 height: 160px;
             }
+
+            .mobile-login-form {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Mobile Background -->
-    <div class="mobile-background"></div>
-
     <!-- Mobile Header (visible only on mobile) -->
     <div class="mobile-header">
         <div class="header-content">
@@ -497,42 +482,7 @@
         </div>
     </div>
 
-    <!-- Mobile Login Card -->
-    <div class="mobile-login-card">
-        <div class="text-center mb-4">
-            <img src="photo/mseuflogo.png" alt="MSEUF Logo" class="login-logo">
-            <h5 class="modal-title">Welcome to MSEUFCI Portal</h5>
-        </div>
-        
-        <form id="mobileLoginForm">
-            <div class="input-wrapper">
-                <i class="fas fa-user input-icon"></i>
-                <input type="text" class="login-form-control" id="mobileUserId" placeholder="User ID" required>
-            </div>
-            
-            <div class="input-wrapper">
-                <i class="fas fa-lock input-icon"></i>
-                <input type="password" class="login-form-control" id="mobilePassword" placeholder="Password" required>
-                <button type="button" class="password-toggle" onclick="toggleMobilePassword()">
-                    <i class="fas fa-eye-slash" id="mobileToggleIcon"></i>
-                </button>
-            </div>
-            
-            <div class="remember-forgot">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="mobileRememberMe">
-                    <label class="form-check-label" for="mobileRememberMe">
-                        Remember me
-                    </label>
-                </div>
-                <a href="#" class="forgot-password">Forgot Password?</a>
-            </div>
-            
-            <button type="submit" class="btn-login">Login</button>
-        </form>
-    </div>
-
-    <!-- Desktop Header -->
+    <!-- Header -->
     <div class="header">
         <div class="logo-section">
             <div class="logo">
@@ -546,9 +496,6 @@
             </div>
         </div>
         <nav class="nav-menu">
-            <a href="#home">Home</a>
-            <a href="#help">Help</a>
-            <a href="#about">About</a>
             <a href="#" class="login-btn" data-bs-toggle="modal" data-bs-target="#loginModal">LOGIN</a>
         </nav>
     </div>
@@ -564,10 +511,33 @@
                 <h2>COLLEGE</h2>
                 <h3>PORTAL</h3>
             </div>
+            
+            <!-- Mobile Login Form (visible only on mobile) -->
+            <div class="mobile-login-form">
+                <img src="photo/mseuflogo.png" alt="MSEUF Logo" class="login-logo">
+                <h5 class="form-title">Welcome to MSEUFCI Portal</h5>
+                
+                <form id="mobileLoginForm">
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" class="login-form-control" placeholder="User ID" required>
+                    </div>
+                    
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="login-form-control" id="mobilePassword" placeholder="Password" required>
+                        <button type="button" class="password-toggle" onclick="toggleMobilePassword()">
+                            <i class="fas fa-eye-slash" id="mobileToggleIcon"></i>
+                        </button>
+                    </div>
+                    
+                    <button type="submit" class="btn-login">Login</button>
+                </form>
+            </div>
         </div>
     </div>
 
-    <!-- Login Modal (for desktop) -->
+    <!-- Login Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -590,16 +560,6 @@
                             <button type="button" class="password-toggle" onclick="togglePassword()">
                                 <i class="fas fa-eye-slash" id="toggleIcon"></i>
                             </button>
-                        </div>
-                        
-                        <div class="remember-forgot">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="rememberMe">
-                                <label class="form-check-label" for="rememberMe">
-                                    Remember me
-                                </label>
-                            </div>
-                            <a href="#" class="forgot-password">Forgot Password?</a>
                         </div>
                         
                         <button type="submit" class="btn-login">Login</button>
@@ -641,18 +601,15 @@
             }
         }
 
-        // Desktop form submission
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const userId = document.getElementById('userId').value;
             const password = document.getElementById('password').value;
-            const rememberMe = document.getElementById('rememberMe').checked;
             
             console.log('Login attempt:', {
                 userId: userId,
-                password: password,
-                rememberMe: rememberMe
+                password: password
             });
             
             alert('Login functionality would be processed here.\nUser ID: ' + userId);
@@ -663,24 +620,48 @@
             this.reset();
         });
 
-        // Mobile form submission
         document.getElementById('mobileLoginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const userId = document.getElementById('mobileUserId').value;
+            const userId = this.querySelector('input[type="text"]').value;
             const password = document.getElementById('mobilePassword').value;
-            const rememberMe = document.getElementById('mobileRememberMe').checked;
             
-            console.log('Mobile login attempt:', {
+            console.log('Mobile Login attempt:', {
                 userId: userId,
-                password: password,
-                rememberMe: rememberMe
+                password: password
             });
             
             alert('Login functionality would be processed here.\nUser ID: ' + userId);
             
             this.reset();
         });
+
+        // Prevent any scrolling on the page
+        document.addEventListener('wheel', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+
+        document.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+
+        document.addEventListener('keydown', function(e) {
+            // Prevent spacebar and arrow keys from scrolling
+            if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+                e.preventDefault();
+            }
+        }, false);
+
+        // Close modal automatically when resizing to mobile view
+        function handleResize() {
+            const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+            if (window.innerWidth <= 768 && modal) {
+                modal.hide();
+            }
+        }
+
+        // Listen for window resize events
+        window.addEventListener('resize', handleResize);
     </script>
 </body>
 </html>
